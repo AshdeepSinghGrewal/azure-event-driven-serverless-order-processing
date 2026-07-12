@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Place Order | TechBloom Laptops</title>
+  <style>
+    :root{--navy:#101626;--indigo:#17ae1f;--bg:#f4f6fa;--text:#111827;--muted:#64748b;--border:#e2e8f0;--teal:#2f6f1f}
+    *{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text)}nav{
+  min-height:68px;
+  padding:0 6vw;
+  background:var(--navy);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  z-index:1000;
+  box-shadow:0 4px 14px rgba(15,23,42,.16);
+}.logo{color:#fff;text-decoration:none;font-size:21px;font-weight:900}.logo span{color:var(--indigo)}.back{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.2);border-radius:9px;padding:9px 14px;font-size:13px;font-weight:700}.head{background:linear-gradient(135deg,#1e293b,#111827);color:#fff;padding:38px 6vw}.head h1{margin:0 0 8px}.head p{margin:0;color:#cbd5e1}.layout{max-width:1050px;margin:38px auto 70px;padding:0 22px;display:grid;grid-template-columns:1fr 390px;gap:24px;align-items:start}.panel{background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 14px 35px rgba(15,23,42,.07)}.panel-head{
+  background:#ffffff;
+  color:var(--text);
+  padding:18px 24px 16px;
+  border-top:5px solid var(--indigo);
+  border-bottom:1px solid var(--border);
+}.panel-head h2{margin:0;font-size:17px}.panel-head p{
+  margin:5px 0 0;
+  color:var(--muted);
+  opacity:1;
+  font-size:12px;
+}form{padding:24px}.field{margin-bottom:18px}label{display:block;margin-bottom:7px;font-size:13px;font-weight:600}input,select{width:100%;border:1.5px solid var(--border);border-radius:9px;padding:12px 13px;font:inherit;outline:none;background:#fff}input:focus,select:focus{border-color:var(--indigo);box-shadow:0 0 0 3px rgba(23,174,31,.13)}.row{display:grid;grid-template-columns:1fr 1fr;gap:15px}button{width:100%;border:0;background:var(--indigo);color:#fff;border-radius:10px;padding:13px 16px;font:inherit;font-weight:900;cursor:pointer}button:disabled{opacity:.65}.message{display:none;margin-top:17px;border-radius:10px;padding:14px;font-size:13px;line-height:1.55}.success{color:#166534;background:#dcfce7;border:1px solid #86efac}.error{color:#b91c1c;background:#fee2e2;border:1px solid #fca5a5}.summary{position:sticky;top:22px}.summary-body{padding:24px}.product-box{
+  background:#f0fdf4;
+  border:1px solid #bbf7d0;
+  border-radius:13px;
+  padding:20px;
+  margin-bottom:18px;
+}.brand{color:var(--teal);text-transform:uppercase;letter-spacing:.12em;font-size:10px;font-weight:900}.product-box h3{margin:7px 0 9px;font-size:18px;line-height:1.35}.sku{font:11px ui-monospace,monospace;color:var(--muted)}.spec{color:var(--muted);font-size:12px;line-height:1.65;margin-bottom:18px}.price-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px}.price-row strong{font-size:15px}.total{border:0;padding-top:16px;font-weight:900}.total strong{color:var(--indigo);font-size:24px}.note{margin-top:18px;color:var(--muted);font-size:11px;line-height:1.55}.site-footer {
+  background: var(--navy);
+  color: #94a3b8;
+  margin-top: 0;
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 52px 6vw 38px;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 64px;
+  text-align: left;
+}
+
+.footer-brand h3 {
+  margin: 0 0 16px;
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.footer-brand h3 span {
+  color: var(--indigo);
+}
+
+.footer-brand p {
+  margin: 0;
+  max-width: 360px;
+  color: #94a3b8;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.footer-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.footer-column h4 {
+  margin: 0 0 8px;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+
+.footer-column a {
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.footer-column a:hover {
+  color: var(--indigo);
+}
+
+.footer-bottom {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 22px 6vw 26px;
+  border-top: 1px solid rgba(148, 163, 184, 0.18);
+  color: #64748b;
+  text-align: center;
+  font-size: 12px;
+}
+
+@media (max-width: 900px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 38px;
+  }
+}
+
+@media (max-width: 560px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+  }
+}@media(max-width:820px){.layout{grid-template-columns:1fr}.summary{position:static}}@media(max-width:520px){.row{grid-template-columns:1fr;gap:0}}
+  </style>
+</head>
+<body>
+  <nav><a class="logo" href="index.html">Tech<span>Bloom</span> Laptops</a><a class="back" href="index.html">← Back to Catalog</a></nav>
+  <section class="head"><h1>Complete Your Order</h1><p>Review your selection and complete your details to place your order.</p></section>
+  <main class="layout">
+    <section class="panel"><div class="panel-head"><h2>Customer Details</h2><p>Enter the information required for confirmation.</p></div><form id="orderForm" novalidate>
+
+  <div style="font-size:11px;font-weight:800;letter-spacing:1px;color:var(--muted);padding-bottom:9px;border-bottom:1px solid var(--border);margin-bottom:18px;">
+    👤 PERSONAL DETAILS
+  </div>
+
+  <div class="row"><div class="field"><label for="firstName">First name <span style="color:#dc2626">*</span></label><input id="firstName" placeholder="e.g. Ricky" required></div><div class="field"><label for="lastName">Last name <span style="color:#dc2626">*</span></label><input id="lastName" placeholder="e.g. Ponting" required></div></div><div class="field">
+  <label for="email">Email address <span style="color:#dc2626">*</span></label>
+  <input id="email" type="email" placeholder="e.g. ricky@email.com" required>
+</div>
+
+<div class="field">
+  <label for="phone">📞 Phone number <span style="color:#dc2626">*</span></label>
+  <input id="phone" type="tel" placeholder="e.g. (416) 555-0123" required>
+</div><div class="field"><label for="quantity">Quantity <span style="color:#dc2626">*</span></label><select id="quantity"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>10</option><option>20</option></select></div><div class="field">
+  <label for="province">Province <span style="color:#dc2626">*</span></label>
+  <select id="province" required>
+    <option value="">Select a province</option>
+    <option>Alberta</option>
+    <option>British Columbia</option>
+    <option>Manitoba</option>
+    <option>New Brunswick</option>
+    <option>Newfoundland and Labrador</option>
+    <option>Nova Scotia</option>
+    <option>Ontario</option>
+    <option>Prince Edward Island</option>
+    <option>Quebec</option>
+    <option>Saskatchewan</option>
+  </select>
+</div>
+
+<div class="field">
+  
+    <label for="address">Delivery address <span style="color:#dc2626">*</span></label>
+    
+
+
+  <input
+  id="address"
+  type="text"
+  placeholder="e.g. 123 Main Street, Toronto, ON"
+  required
+>
+</div>
+
+<div style="margin:0 0 18px;">
+  <div style="font-size:11px;font-weight:800;letter-spacing:1px;color:var(--muted);padding-bottom:9px;border-bottom:1px solid var(--border);margin-bottom:12px;">
+    💳 ORDER CONFIRMATION
+  </div>
+
+  <div style="padding:13px 15px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:9px;color:#166534;font-size:12px;line-height:1.55;">
+    🔒 Your order will be reviewed, and a confirmation email will be sent once product availability is verified.
+  </div>
+</div>
+
+<button id="submitButton">Place Order</button><div class="message success" id="successMessage"></div><div class="message error" id="errorMessage"></div></form></section>
+    <aside class="panel summary"><div class="panel-head"><h2>Order Summary</h2><p>Review the selected product.</p></div><div class="summary-body">
+  <img
+    id="productImage"
+    alt="Selected laptop"
+    style="display:none;width:100%;height:190px;object-fit:contain;margin-bottom:18px;"
+  >
+  <div class="product-box"><div class="brand" id="brandText">Brand</div><h3 id="nameText">Selected Laptop</h3><div class="sku" id="skuText">SKU</div></div><div class="spec" id="specText"></div><div class="price-row"><span>Unit price</span><strong id="unitPrice">$0.00</strong></div><div class="price-row"><span>Quantity</span><strong id="quantityText">1</strong></div><div class="price-row total"><span>Total</span><strong id="totalPrice">$0.00</strong></div><div class="note">Availability will be confirmed after your order is submitted. You will receive an update by email.</div></div></aside>
+  </main>
+  <footer class="site-footer">
+  <div class="footer-content">
+
+    <div class="footer-brand">
+      <h3>Tech<span>Bloom</span> Laptops</h3>
+      <p>
+        Explore laptops for study, business, creativity and gaming,
+        with convenient online ordering across Canada.
+      </p>
+    </div>
+
+    <div class="footer-column">
+      <h4>EXPLORE</h4>
+      <a href="index.html#home">Home</a>
+      <a href="index.html#laptops">Featured Laptops</a>
+      <a href="index.html#laptops">Gaming Laptops</a>
+      <a href="index.html#laptops">Business Laptops</a>
+    </div>
+
+    <div class="footer-column">
+      <h4>SUPPORT</h4>
+      <a href="index.html#support">Order Support</a>
+      <a href="index.html#support">Product Availability</a>
+      <a href="index.html#support">Email Confirmation</a>
+      <a href="index.html">Back to Store</a>
+    </div>
+
+    <div class="footer-column">
+      <h4>TECHBLOOM</h4>
+      <a href="index.html#home">About Us</a>
+      <a href="index.html#laptops">Laptop Collection</a>
+      <a href="index.html#support">Contact Support</a>
+      <a href="index.html">Continue Shopping</a>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 TechBloom Laptops. All rights reserved.
+  </div>
+</footer>
+  <script>
+    const FUNCTION_URL='https://func-order-processing-ashdeep-dev-ghg5h0dvc2ewgjd7.eastus2-01.azurewebsites.net/api/submit_order';
+    const p = new URLSearchParams(location.search);
+    const product = {
+      sku: p.get('sku') || '',
+      brand: p.get('brand') || 'Unknown brand',
+      name: p.get('name') || 'Selected laptop',
+      price: Number(p.get('price') || 0),
+      spec: p.get('spec') || '',
+image: p.get('image') || ''
+    };
+
+    const brandText = document.getElementById('brandText');
+    const nameText = document.getElementById('nameText');
+    const skuText = document.getElementById('skuText');
+    const specText = document.getElementById('specText');
+    const unitPrice = document.getElementById('unitPrice');
+    const quantitySelect = document.getElementById('quantity');
+    const quantityText = document.getElementById('quantityText');
+    const totalPrice = document.getElementById('totalPrice');
+    const orderForm = document.getElementById('orderForm');
+    const firstNameInput = document.getElementById('firstName');
+    const lastNameInput = document.getElementById('lastName');
+    const emailInput = document.getElementById('email');
+    const submitButton = document.getElementById('submitButton');
+    const successMessage = document.getElementById('successMessage');
+    const errorMessage = document.getElementById('errorMessage');
+
+    const money = value => '$' + Number(value).toLocaleString('en-CA', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+    brandText.textContent = product.brand;
+    nameText.textContent = product.name;
+    skuText.textContent = 'SKU: ' + (product.sku || 'Missing');
+    specText.textContent = product.spec;
+    unitPrice.textContent = money(product.price);
+
+    function update() {
+      const qty = Number(quantitySelect.value);
+      quantityText.textContent = qty;
+      totalPrice.textContent = money(product.price * qty);
+    }
+    quantitySelect.addEventListener('change', update);
+    update();
+
+    orderForm.addEventListener('submit', async event => {
+      event.preventDefault();
+      successMessage.style.display = 'none';
+      errorMessage.style.display = 'none';
+
+      const first = firstNameInput.value.trim();
+      const last = lastNameInput.value.trim();
+      const mail = emailInput.value.trim();
+      const qty = Number(quantitySelect.value);
+
+      if (!first || !last || !mail || !product.sku) {
+        errorMessage.textContent = 'Please complete all required information.';
+        errorMessage.style.display = 'block';
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = 'Submitting…';
+
+      try {
+        const response = await fetch(FUNCTION_URL, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({name: first + ' ' + last, email: mail, product: product.sku, quantity: qty})
+        });
+
+        const raw = await response.text();
+        let data = {};
+        try { data = raw ? JSON.parse(raw) : {}; } catch {}
+        if (!response.ok) throw new Error(data.error || raw || 'Request failed');
+
+        successMessage.innerHTML = '<strong>Order received successfully.</strong><br>Order ID: ' +
+          (data.order_id || 'Not returned') +
+          '<br>Please check your email for the final result.';
+        successMessage.style.display = 'block';
+      } catch (error) {
+        errorMessage.textContent = 'The website could not submit the order. ' +
+          (error.message || 'Please try again.');
+        errorMessage.style.display = 'block';
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Place Order';
+      }
+    });
+  </script>
+</body>
+</html>
