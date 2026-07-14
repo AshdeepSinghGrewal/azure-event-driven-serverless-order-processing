@@ -136,7 +136,30 @@
 <div class="field">
   <label for="phone">📞 Phone number <span style="color:#dc2626">*</span></label>
   <input id="phone" type="tel" placeholder="e.g. (416) 555-0123" required>
-</div><div class="field"><label for="quantity">Quantity <span style="color:#dc2626">*</span></label><select id="quantity"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>10</option><option>20</option></select></div><div class="field">
+</div><div class="field">
+  <label for="quantity">
+    Quantity <span style="color:#dc2626">*</span>
+  </label>
+
+  <select id="quantity" required>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="custom">Custom</option>
+  </select>
+
+  <input
+    id="customQuantity"
+    type="number"
+    min="6"
+    max="50"
+    step="1"
+    placeholder="Enter quantity from 6 to 50"
+    style="display:none; margin-top:10px;"
+  >
+</div><div class="field">
   <label for="province">Province <span style="color:#dc2626">*</span></label>
   <select id="province" required>
     <option value="">Select a province</option>
@@ -245,12 +268,16 @@ image: p.get('image') || ''
     const specText = document.getElementById('specText');
     const unitPrice = document.getElementById('unitPrice');
     const quantitySelect = document.getElementById('quantity');
+    const customQuantityInput = document.getElementById('customQuantity');
     const quantityText = document.getElementById('quantityText');
     const totalPrice = document.getElementById('totalPrice');
     const orderForm = document.getElementById('orderForm');
     const firstNameInput = document.getElementById('firstName');
     const lastNameInput = document.getElementById('lastName');
     const emailInput = document.getElementById('email');
+    const phoneInput = document.getElementById('phone');
+const provinceInput = document.getElementById('province');
+const addressInput = document.getElementById('address');
     const submitButton = document.getElementById('submitButton');
     const successMessage = document.getElementById('successMessage');
     const errorMessage = document.getElementById('errorMessage');
@@ -263,13 +290,42 @@ image: p.get('image') || ''
     specText.textContent = product.spec;
     unitPrice.textContent = money(product.price);
 
-    function update() {
-      const qty = Number(quantitySelect.value);
-      quantityText.textContent = qty;
-      totalPrice.textContent = money(product.price * qty);
-    }
-    quantitySelect.addEventListener('change', update);
-    update();
+    function getQuantity() {
+  if (quantitySelect.value === 'custom') {
+    return Number(customQuantityInput.value);
+  }
+
+  return Number(quantitySelect.value);
+}
+
+function update() {
+  const qty = getQuantity();
+  const validQty = Number.isInteger(qty) && qty >= 1 && qty <= 50;
+
+  quantityText.textContent = validQty ? qty : 0;
+  totalPrice.textContent = money(
+    product.price * (validQty ? qty : 0)
+  );
+}
+
+quantitySelect.addEventListener('change', function () {
+  const customSelected = quantitySelect.value === 'custom';
+
+  customQuantityInput.style.display =
+    customSelected ? 'block' : 'none';
+
+  customQuantityInput.required = customSelected;
+
+  if (!customSelected) {
+    customQuantityInput.value = '';
+  }
+
+  update();
+});
+
+customQuantityInput.addEventListener('input', update);
+
+update();
 
     orderForm.addEventListener('submit', async event => {
       event.preventDefault();
@@ -279,13 +335,31 @@ image: p.get('image') || ''
       const first = firstNameInput.value.trim();
       const last = lastNameInput.value.trim();
       const mail = emailInput.value.trim();
-      const qty = Number(quantitySelect.value);
+      const phone = phoneInput.value.trim();
+      const province = provinceInput.value;
+      const address = addressInput.value.trim();
+      const phoneDigits = phone.replace(/\D/g, '');
+      const qty = getQuantity();
 
-      if (!first || !last || !mail || !product.sku) {
-        errorMessage.textContent = 'Please complete all required information.';
-        errorMessage.style.display = 'block';
-        return;
-      }
+      if (
+  !first ||
+  !last ||
+  !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail) ||
+phoneDigits.length < 10 ||
+!province ||
+address.length < 5 ||
+  !product.sku ||
+  !Number.isInteger(qty) ||
+  qty < 1 ||
+  qty > 50 ||
+  (quantitySelect.value === 'custom' && qty < 6)
+) {
+  errorMessage.textContent =
+    'Please complete all required information correctly. Phone must contain at least 10 digits, and quantity must be from 1 to 50.';
+
+  errorMessage.style.display = 'block';
+  return;
+}
 
       submitButton.disabled = true;
       submitButton.textContent = 'Submitting…';
@@ -294,7 +368,15 @@ image: p.get('image') || ''
         const response = await fetch(FUNCTION_URL, {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({name: first + ' ' + last, email: mail, product: product.sku, quantity: qty})
+          body: JSON.stringify({
+  name: first + ' ' + last,
+  email: mail,
+  phone: phone,
+  province: province,
+  address: address,
+  product: product.sku,
+  quantity: qty
+})
         });
 
         const raw = await response.text();
