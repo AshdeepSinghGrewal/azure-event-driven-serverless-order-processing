@@ -1,4 +1,4 @@
-# TechBloom Laptops - Event-Driven Serverless Order Processing
+# TechBloom Laptops — Event-Driven Serverless Order Processing
 
 An event-driven serverless order-processing system built on Microsoft Azure. Customers can select a laptop, submit an order, and receive an automated confirmation or rejection email.
 
